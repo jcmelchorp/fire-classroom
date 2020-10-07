@@ -3,6 +3,7 @@
     "rules": "database.rules.json"
   },
   "hosting": {
+  "site":"fireclassroom",
     "public": "dist/fire-classroom",
     "ignore": [
       "firebase.json",
