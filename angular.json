@@ -123,6 +123,11 @@
           }
         }
       }
-    }},
-  "defaultProject": "fire-classroom"
+    }
+  },
+  "defaultProject": "fire-classroom",
+  "cli": {
+    "analytics": "ef7de0bd-2f63-41cf-bd47-dd519cc3e804",
+    "defaultCollection": "@ngrx/schematics"
+  }
 }
