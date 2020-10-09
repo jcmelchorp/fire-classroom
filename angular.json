@@ -23,6 +23,7 @@
               "@firebase/database",
               "@firebase/firestore",
               "@firebase/auth",
+              "@angular/fire/firestore",
               "firebase/app",
               "md5"
             ],
