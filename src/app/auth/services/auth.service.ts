@@ -1,3 +1,4 @@
+import { UpdateProfile } from './../store/auth.actions';
 import { GoogleApiService } from 'src/app/auth/services/google-api.service';
 import { switchMap } from 'rxjs/operators';
 import {
@@ -78,12 +79,12 @@ export class AuthService {
   }
 
   updateProfile(
-    displayName: string,
-    photoUrl: string
-  ): Observable<firebase.User> {
-    const userProfile = this.afAuth.currentUser;
+    newName: string,
+    newPhotoUrl: string
+  ) {
+    const userProfile = firebase.auth().currentUser;
     if (userProfile) {
-      return from(userProfile) as any;
+      return from<any>(userProfile.updateProfile({ displayName: newName, photoURL: newPhotoUrl }));
     }
   }
 

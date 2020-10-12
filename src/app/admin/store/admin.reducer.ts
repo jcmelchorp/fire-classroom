@@ -19,21 +19,21 @@ export function adminReducer(
       });
     }
 
-    case AdminActionTypes.GET_USER_ITEMS: {
+    case AdminActionTypes.GET_USER_COURSES: {
       return Object.assign({}, state, {
-        userProjectsLoading: true,
+        userCoursesLoading: true,
       });
     }
 
-    /*  case AdminActionTypes.USERS_ITEMS_LOADED: {
+    case AdminActionTypes.USERS_COURSES_LOADED: {
       return Object.assign({}, state, {
-        userProjects: {
-          ...state.userItems,
-          [action.payload.uid]: action.payload.userItems,
+        userCourses: {
+          ...state.userCourses,
+          [action.payload.uid]: action.payload.userCourses,
         },
-        userProjectsLoading: false,
+        userCoursesLoading: false,
       });
-    } */
+    }
 
     case AdminActionTypes.GET_USER_CUSTOMERS: {
       return Object.assign({}, state, {
@@ -41,12 +41,12 @@ export function adminReducer(
       });
     }
 
-    /*  case AdminActionTypes.USERS_CUSTOMERS_LOADED: {
-       return Object.assign({}, state, {
-         userCustomers: {...state.userCustomers, [action.payload.uid]: action.payload.userCustomers},
-         userCustomersLoading: false
-       });
-     } */
+    case AdminActionTypes.USERS_CUSTOMERS_LOADED: {
+      return Object.assign({}, state, {
+        userCustomers: { ...state.userCustomers, [action.payload.uid]: action.payload.userCustomers },
+        userCustomersLoading: false
+      });
+    }
 
     case AdminActionTypes.ADMIN_ERROR: {
       return Object.assign({}, state, {

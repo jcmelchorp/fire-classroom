@@ -38,6 +38,7 @@
               "src/manifest.webmanifest"
             ],
             "styles": [
+              "./node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",
               "./node_modules/bootstrap/scss/bootstrap.scss",
               "src/styles.scss"
             ],
@@ -105,6 +106,7 @@
               "src/manifest.webmanifest"
             ],
             "styles": [
+              "./node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",
               "./node_modules/bootstrap/scss/bootstrap.scss",
               "src/styles.scss"
             ],

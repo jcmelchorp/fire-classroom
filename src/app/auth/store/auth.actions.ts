@@ -34,7 +34,7 @@ export class RegisterRequested implements Action {
 
   constructor(
     public payload: { username: string; email: string; password: string }
-  ) {}
+  ) { }
 }
 
 export class RegisterCompleted implements Action {
@@ -44,31 +44,31 @@ export class RegisterCompleted implements Action {
 export class RegisterFailed implements Action {
   readonly type = AuthActionTypes.REGISTER_FAILED;
 
-  constructor(public payload: { error: any }) {}
+  constructor(public payload: { error: any }) { }
 }
 
 export class UpdateProfile implements Action {
   readonly type = AuthActionTypes.UPDATE_PROFILE;
 
-  constructor(public payload: { displayName: string; photoUrl: string }) {}
+  constructor(public payload: { displayName: string; photoUrl: string }) { }
 }
 
 export class UpdateProfileSuccess implements Action {
   readonly type = AuthActionTypes.UPDATE_PROFILE_SUCCESS;
 
-  constructor(public payload: { user: User }) {}
+  constructor(public payload: { user: User }) { }
 }
 
 export class LoginRequested implements Action {
   readonly type = AuthActionTypes.LOGIN_REQUESTED;
 
-  constructor(public payload: { email: string; password: string }) {}
+  constructor(public payload: { email: string; password: string }) { }
 }
 
 export class LoginSuccess implements Action {
   readonly type = AuthActionTypes.LOGIN_SUCCESS;
 
-  constructor(public payload: { user: User }) {}
+  constructor(public payload: { user: User }) { }
 }
 
 export class LoginFailed implements Action {
@@ -78,13 +78,13 @@ export class LoginFailed implements Action {
 export class SocialLogin implements Action {
   readonly type = AuthActionTypes.SOCIAL_LOGIN;
 
-  constructor(public payload: { authProvider: string }) {}
+  constructor(public payload: { authProvider: string }) { }
 }
 
 export class LogoutRequested implements Action {
   readonly type = AuthActionTypes.LOGOUT_REQUESTED;
 
-  constructor(public payload: { user: User }) {}
+  constructor(public payload: { user: User }) { }
 }
 
 export class LogoutCompleted implements Action {
@@ -94,25 +94,25 @@ export class LogoutCompleted implements Action {
 export class SaveUser implements Action {
   readonly type = AuthActionTypes.SAVE_USER;
 
-  constructor(public payload: { user: User }) {}
+  constructor(public payload: { user: User }) { }
 }
 
 export class UpdateOnlineStatus implements Action {
   readonly type = AuthActionTypes.UPDATE_ONLINE_STATUS;
 
-  constructor(public payload: { uid: string; status: boolean }) {}
+  constructor(public payload: { uid: string; status: boolean }) { }
 }
 
 export class CheckUserRole implements Action {
   readonly type = AuthActionTypes.CHECK_USER_ROLE;
 
-  constructor(public payload: { uid: string }) {}
+  constructor(public payload: { uid: string }) { }
 }
 
 export class UpdateUserRole implements Action {
   readonly type = AuthActionTypes.UPDATE_USER_ROLE;
 
-  constructor(public payload: { isAdmin: boolean }) {}
+  constructor(public payload: { isAdmin: boolean }) { }
 }
 
 export class GetUser implements Action {
@@ -122,7 +122,7 @@ export class GetUser implements Action {
 export class AuthError implements Action {
   readonly type = AuthActionTypes.AUTH_ERROR;
 
-  constructor(public payload: { error: any }) {}
+  constructor(public payload: { error: any }) { }
 }
 
 export type AuthAction =

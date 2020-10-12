@@ -21,7 +21,7 @@ export class GoogleApiService {
     });
   }
 
-  initClient() {
+  initClient(): void {
     gapi.load('client', () => {
       console.log('loaded client');
       gapi.client.init({

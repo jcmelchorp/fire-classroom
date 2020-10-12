@@ -1,10 +1,9 @@
-import * as courseActions from './course.actions';
-import { Actions, CourseActionTypes } from './course.actions';
+import { CoursesActions, CourseActionTypes } from './course.actions';
 import { courseInitialState, CoursesState } from './course.state';
 
 export function courseReducer(
   state = courseInitialState,
-  action: courseActions.Actions
+  action: CoursesActions
 ): CoursesState {
   switch (action.type) {
     case CourseActionTypes.COURSES_QUERY: {

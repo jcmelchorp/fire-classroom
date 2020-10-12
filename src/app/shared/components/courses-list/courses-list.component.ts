@@ -1,6 +1,3 @@
-import { getCourse } from './../../store/course.selectors';
-import { Observable } from 'rxjs';
-import { Course } from './../../models/course.model';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -9,7 +6,7 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { select, Store } from '@ngrx/store';
+import { Course } from 'src/app/courses/models/course.model';
 
 @Component({
   selector: 'app-courses-list',
@@ -22,9 +19,9 @@ export class CoursesListComponent implements OnInit {
   @Input() editable = true;
   @Output() courseDeleted = new EventEmitter<Course>();
   @Output() courseEdited = new EventEmitter<Course>();
-  constructor() {}
+  constructor() { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   onCourseDelete(course: Course) {
     this.courseDeleted.emit(course);

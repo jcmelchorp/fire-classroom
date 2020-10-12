@@ -37,7 +37,7 @@ export class CourseDbService {
     }
   }
   getAll(uid: string) {
-    return this.db.list<Course>(`courses/${this.userId}`).snapshotChanges();
+    return this.db.list<Course>(`courses/${uid}`).snapshotChanges();
   }
 
   update(course: Course, uid: string) {

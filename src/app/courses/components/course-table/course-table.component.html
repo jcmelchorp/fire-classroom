@@ -1,5 +1,5 @@
-<div class="mat-elevation-z8">
-  <table mat-table class="full-width-table" matSort aria-label="Clases" multiTemplateDataRows>
+<div [class.mat-elevation-z4]="false">
+  <table mat-table class="full-width-table" [dataSource]="courses" matSort aria-label="Clases" multiTemplateDataRows>
     <!-- Id Column -->
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Clase</th>

@@ -1,3 +1,4 @@
+import { SharedModule } from './../shared/shared.module';
 import { AdminRoutingModule } from './admin-routing.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -30,8 +31,9 @@ import { MaterialModule } from '../material/material.module';
     FlexLayoutModule,
     FontAwesomeModule,
     ReactiveFormsModule,
+    SharedModule,
     StoreModule.forFeature('admin', fromAdmin.adminReducer),
     EffectsModule.forFeature([AdminEffects]),
   ],
 })
-export class AdminModule {}
+export class AdminModule { }

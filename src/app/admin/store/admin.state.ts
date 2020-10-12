@@ -1,10 +1,9 @@
-// import { Item } from 'src/app/projects/models/project.model';
 
 export interface AdminState {
   usersList: any[];
   usersListLoading: boolean;
-  userItems: any;
-  userItemsLoading: boolean;
+  userCourses: any;
+  userCoursesLoading: boolean;
   userCustomers: any;
   userCustomersLoading: boolean;
   error: any;
@@ -13,8 +12,8 @@ export interface AdminState {
 export const adminInitialState: AdminState = {
   usersList: [],
   usersListLoading: false,
-  userItems: {},
-  userItemsLoading: false,
+  userCourses: {},
+  userCoursesLoading: false,
   userCustomers: {},
   userCustomersLoading: false,
   error: null,

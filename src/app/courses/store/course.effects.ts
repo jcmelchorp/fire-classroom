@@ -21,7 +21,7 @@ export class CourseEffect {
     private actions$: Actions,
     private courseDbService: CourseDbService,
     private store: Store<AppState>
-  ) {}
+  ) { }
 
   @Effect()
   query$ = this.actions$.pipe(

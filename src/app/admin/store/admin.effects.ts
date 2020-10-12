@@ -1,3 +1,4 @@
+import { Course } from './../../courses/models/course.model';
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 
@@ -5,11 +6,10 @@ import * as fromAdmin from './../store/admin.actions';
 import { switchMap, map, catchError, mergeMap } from 'rxjs/operators';
 import { AdminService } from '../services/admin.service';
 import { of } from 'rxjs';
-/* import { Item } from 'src/app/item/models/item.model';
- */
+import { Customer } from 'src/app/customers/models/customer.model';
 @Injectable()
 export class AdminEffects {
-  constructor(private actions$: Actions, private adminService: AdminService) {}
+  constructor(private actions$: Actions, private adminService: AdminService) { }
 
   @Effect()
   getUsersList$ = this.actions$.pipe(
@@ -21,7 +21,7 @@ export class AdminEffects {
             const key = res.payload.key;
             const user: any = res.payload.val();
             return {
-              key,
+              key: key,
               uid: user.uid,
               displayName: user.displayName,
               email: user.email,
@@ -39,51 +39,66 @@ export class AdminEffects {
     )
   );
 
-  /*  @Effect()
-  getUserItems$ = this.actions$.pipe(
-    ofType(fromAdmin.AdminActionTypes.GET_USER_ITEMS),
-    map((action: fromAdmin.GetUserItems) => action.payload),
+  @Effect()
+  getUserCourses$ = this.actions$.pipe(
+    ofType(fromAdmin.AdminActionTypes.GET_USER_COURSES),
+    map((action: fromAdmin.GetUserCourses) => action.payload),
     mergeMap((payload: any) =>
-      this.adminService.getUserItems(payload.uid).pipe(
+      this.adminService.getUserCourses(payload.uid).pipe(
         map((data: any) => {
-          const itemsData: Item[] = data.map((res: any) => {
+          const coursesData: Course[] = data.map((res: any) => {
             const key = res.payload.key;
-            const item: Item = res.payload.val();
+            const course: Course = res.payload.val();
             return {
-              key: key || null,
-              title: item.itemName || null,
-              description: item.isActive || null,
-              photoUrl: item.dateCreated || null,
+              key: key,
+              id: course.id,
+              name: course.name,
+              section: course.section,
+              descriptionHeading: course.descriptionHeading,
+              description: course.description,
+              room: course.room,
+              ownerId: course.ownerId,
+              creationTime: course.creationTime,
+              updateTime: course.updateTime,
+              enrollmentCode: course.enrollmentCode,
+              courseState: course.courseState,
+              alternateLink: course.alternateLink,
+              teacherGroupEmail: course.teacherGroupEmail,
+              courseGroupEmail: course.courseGroupEmail,
+              guardiansEnabled: course.guardiansEnabled,
+              calendarId: course.calendarId,
+              teacherFolder: course.teacherFolder,
+              courseMaterialSets: course.courseMaterialSets,
             };
           });
-          return new fromAdmin.UserItemsLoaded({
+          return new fromAdmin.UserCoursesLoaded({
             uid: payload.uid,
-            userItems: itemsData,
+            userCourses: coursesData,
           });
         }),
         catchError((error) => of(new fromAdmin.AdminError({ error })))
       )
     )
-  ); */
+  );
 
   @Effect({ dispatch: false })
-  deleteUserItem$ = this.actions$.pipe(
-    ofType(fromAdmin.AdminActionTypes.DELETE_USER_ITEM),
-    map((action: fromAdmin.DeleteUserItem) => action.payload),
+  deleteUserCourse$ = this.actions$.pipe(
+    ofType(fromAdmin.AdminActionTypes.DELETE_USER_COURSE),
+    map((action: fromAdmin.DeleteUserCourse) => action.payload),
     switchMap((payload: any) =>
       this.adminService
-        .deleteUserItem(payload.userId, payload.itemId)
+        .deleteUserCourse(payload.userId, payload.courseId)
         .pipe(
           catchError((error: any) => of(new fromAdmin.AdminError({ error })))
         )
     )
   );
 
-  /* @Effect()
+  @Effect()
   getUserCustomers$ = this.actions$.pipe(
     ofType(fromAdmin.AdminActionTypes.GET_USER_CUSTOMERS),
     map((action: fromAdmin.GetUserCustomers) => action.payload),
-    mergeMap( (payload: any) => this.adminService.getUserCustomers(payload.uid)
+    mergeMap((payload: any) => this.adminService.getUserCustomers(payload.uid)
       .pipe(
         map((data: any) => {
           const customersData: Customer[] = data.map((res: any) => {
@@ -101,7 +116,7 @@ export class AdminEffects {
         catchError(error => of(new fromAdmin.AdminError({ error })))
       )
     )
-  ); */
+  );
 
   @Effect({ dispatch: false })
   deleteUserCustomer$ = this.actions$.pipe(

@@ -1,3 +1,4 @@
+import { CarouselModule } from 'ngx-bootstrap/carousel';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { NgModule } from '@angular/core';
@@ -17,6 +18,7 @@ import { WellcomeComponent } from './components/wellcome/wellcome.component';
 import { AboutComponent } from './components/about/about.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MaterialModule } from '../material/material.module';
+
 
 @NgModule({
   declarations: [
@@ -40,6 +42,7 @@ import { MaterialModule } from '../material/material.module';
     FlexLayoutModule,
     FontAwesomeModule,
     LayoutModule,
+    CarouselModule
   ],
   exports: [
     AboutComponent,

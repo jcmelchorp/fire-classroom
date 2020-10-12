@@ -22,6 +22,8 @@ export const materialProviders = [
     provide: MAT_DIALOG_DEFAULT_OPTIONS,
     useValue: {
       ...new MatDialogConfig(),
+      hasBackdrop: true,
+
     },
   },
   {

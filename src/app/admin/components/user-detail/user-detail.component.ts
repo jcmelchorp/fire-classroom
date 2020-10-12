@@ -7,10 +7,10 @@ import {
   ChangeDetectionStrategy,
 } from '@angular/core';
 import { faArrowLeft, faCircle } from '@fortawesome/free-solid-svg-icons';
-/* import { Item } from 'src/app/item/models/item.model';
- */ import { User } from '../../../auth/models/user.model';
-/* import { Course } from 'src/app/courses/models/course.model';
- */
+import { User } from '../../../auth/models/user.model';
+import { Course } from 'src/app/courses/models/course.model';
+import { Customer } from 'src/app/customers/models/customer.model';
+
 @Component({
   selector: 'app-user-detail',
   templateUrl: './user-detail.component.html',
@@ -18,33 +18,43 @@ import { faArrowLeft, faCircle } from '@fortawesome/free-solid-svg-icons';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserDetailComponent implements OnInit {
-  @Input() user: User | undefined;
-  //@Input() items: Item[];
-  @Input() userItemsLoading: boolean;
+  @Input() user: User;
+  @Input() courses: Course[];
+  @Input() customers: Customer[];
+  @Input() userCoursesLoading: boolean;
+  @Input() userCustomersLoading: boolean;
   @Output() detailsClosed = new EventEmitter<any>();
-  @Output() itemsLoad = new EventEmitter<any>();
-  // @Output() itemDeleted = new EventEmitter<Item>();
+  @Output() coursesLoad = new EventEmitter<any>();
+  @Output() customersLoad = new EventEmitter<any>();
+  @Output() courseDeleted = new EventEmitter<Course>();
+  @Output() customerDeleted = new EventEmitter<Customer>();
   @Output() addAdmin = new EventEmitter<any>();
   @Output() removeAdmin = new EventEmitter<any>();
   left = faArrowLeft;
   circ = faCircle;
 
-  constructor() {}
+  constructor() { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   closeDetails(): void {
     this.detailsClosed.emit();
   }
 
-  loadItems(): void {
-    this.itemsLoad.emit();
+  loadCustomers() {
+    this.customersLoad.emit();
   }
 
-  /*  onItemsDelete(item: Item): void {
-    this.itemDeleted.emit(item);
+  loadCourses(): void {
+    this.coursesLoad.emit();
   }
- */
+  onCustomerDelete(customer: Customer) {
+    this.customerDeleted.emit(customer);
+  }
+  onCourseDelete(course: Course): void {
+    this.courseDeleted.emit(course);
+  }
+
   onAddAdmin(): void {
     this.addAdmin.emit(this.user);
   }

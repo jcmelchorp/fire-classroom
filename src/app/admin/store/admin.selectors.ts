@@ -19,11 +19,11 @@ export const getSelectedUser = createSelector(
     usersList.filter((user: any) => user.uid === uid)[0]
 );
 
-export const getUserItems = createSelector(
+export const getUserCourses = createSelector(
   getAdminState,
   (admin: any, uid: string) => {
-    if (admin.userItems.hasOwnProperty(uid)) {
-      return admin.userItems[uid];
+    if (admin.userCourses.hasOwnProperty(uid)) {
+      return admin.userCourses[uid];
     } else {
       return null;
     }
@@ -41,9 +41,9 @@ export const getUserCustomers = createSelector(
   }
 );
 
-export const getUserItemsLoading = createSelector(
+export const getUserCoursesLoading = createSelector(
   getAdminState,
-  (admin) => admin.userItemsLoading
+  (admin) => admin.userCoursesLoading
 );
 
 export const getUserCustomersLoading = createSelector(

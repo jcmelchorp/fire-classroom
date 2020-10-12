@@ -1,3 +1,4 @@
+import { SeoService } from './shared/services/seo.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MediaObserver, MediaChange } from '@angular/flex-layout';
 import { Store } from '@ngrx/store';
@@ -12,6 +13,7 @@ import {
 import * as fromAuth from './auth/store/auth.actions';
 import { AppState } from './state/app.state';
 
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -21,15 +23,21 @@ export class AppComponent implements OnInit, OnDestroy {
   title = 'fire-classroom';
   mediaSub: Subscription;
   deviceXs: boolean;
-  user$: Observable<User | null>;
+  user$: Observable<User|null>;
   isLoggedIn$: Observable<boolean>;
   isLoading$: Observable<boolean>;
   isAdmin$: Observable<boolean>;
   constructor(
     private store: Store<AppState>,
-    public mediaObserver: MediaObserver
+    public mediaObserver: MediaObserver,
+    public seoService: SeoService
   ) {}
   ngOnInit(): void {
+    this.seoService.generateTags({
+      title: 'FireClassroom',
+      description: 'Firebase administrator for Google Classroom',
+      image: 'https://fireclassroom.web.app/assets/images/FireClassroom.png'
+     });
     this.user$ = this.store.select(getUser);
     this.isLoggedIn$ = this.store.select(getIsLoggedIn);
     this.isLoading$ = this.store.select(getIsLoading);

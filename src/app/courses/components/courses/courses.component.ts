@@ -15,12 +15,10 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { select, Store } from '@ngrx/store';
 import { Subject, Observable, from, empty, Subscription } from 'rxjs';
-import { map, switchMap, take } from 'rxjs/operators';
-import { User } from 'src/app/auth/models/user.model';
+import { map } from 'rxjs/operators';
 import { Course } from '../../models/course.model';
-import { getAllCoursesLoaded, getCourse } from '../../store/course.selectors';
+import { getAllLoaded, getCourse } from '../../store/course.selectors';
 import * as courseActions from '../../store/course.actions';
-import { getUser } from 'src/app/auth/store/auth.selectors';
 import { AppState } from 'src/app/state/app.state';
 
 @Component({
@@ -38,14 +36,14 @@ export class CoursesComponent implements OnInit, OnDestroy {
   world = faGlobeAmericas;
   courses$: Observable<Course[]>;
   error$: Observable<string>;
-  loading$: Observable<boolean>;
+  isLoading$: Observable<boolean>;
   constructor(
     private store: Store<AppState>,
     private afAuth: AngularFireAuth
-  ) {}
+  ) { }
 
-  ngOnInit() {
-    this.loading$ = this.store.select(getAllCoursesLoaded);
+  ngOnInit(): void {
+    this.isLoading$ = this.store.select(getAllLoaded);
     this.courses$ = this.store.pipe(
       select(getCourse),
       map((courses: Course[]) => {
@@ -57,10 +55,10 @@ export class CoursesComponent implements OnInit, OnDestroy {
     );
   }
 
-  get user() {
+  get user(): Promise<firebase.User> {
     return this.afAuth.currentUser;
   }
-  async ngOnDestroy() {
+  ngOnDestroy(): void {
     this.destroy$.next(true);
     // Unsubscribe from the subject
     this.destroy$.unsubscribe();

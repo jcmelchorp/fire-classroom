@@ -1,12 +1,14 @@
 import { Action } from '@ngrx/store';
+import { Course } from 'src/app/courses/models/course.model';
+import { Customer } from 'src/app/customers/models/customer.model';
 
 export enum AdminActionTypes {
   GET_USERS_LIST = '[Admin] Get Users List',
   USERS_LIST_FETCHED = '[Admin] Users list fetched',
 
-  GET_USER_ITEMS = '[Admin] Get user items',
-  USERS_ITEMS_LOADED = '[Admin] User items loaded',
-  DELETE_USER_ITEM = '[Admin] Delete user item',
+  GET_USER_COURSES = '[Admin] Get user courses',
+  USERS_COURSES_LOADED = '[Admin] User courses loaded',
+  DELETE_USER_COURSE = '[Admin] Delete user course',
 
   GET_USER_CUSTOMERS = '[Admin] Get user customers',
   USERS_CUSTOMERS_LOADED = '[Admin] User customers loaded',
@@ -25,72 +27,71 @@ export class GetUsersList implements Action {
 export class UsersListFetched implements Action {
   readonly type = AdminActionTypes.USERS_LIST_FETCHED;
 
-  constructor(public payload: { usersList: any[] }) {}
+  constructor(public payload: { usersList: any[] }) { }
 }
 
-export class GetUserItems implements Action {
-  readonly type = AdminActionTypes.GET_USER_ITEMS;
+export class GetUserCourses implements Action {
+  readonly type = AdminActionTypes.GET_USER_COURSES;
 
-  constructor(public payload: { uid: string }) {}
+  constructor(public payload: { uid: string }) { }
 }
 
-export class DeleteUserItem implements Action {
-  readonly type = AdminActionTypes.DELETE_USER_ITEM;
+export class DeleteUserCourse implements Action {
+  readonly type = AdminActionTypes.DELETE_USER_COURSE;
 
-  constructor(public payload: { userId: string; itemId: string }) {}
+  constructor(public payload: { userId: string; courseId: string }) { }
 }
 
-/* export class UserItemsLoaded implements Action {
-  readonly type = AdminActionTypes.USERS_ITEMS_LOADED;
+export class UserCoursesLoaded implements Action {
+  readonly type = AdminActionTypes.USERS_COURSES_LOADED;
 
-  constructor(public payload: { uid: string; userItems: Item[] }) {}
-} */
+  constructor(public payload: { uid: string; userCourses: Course[] }) { }
+}
 
 export class GetUserCustomers implements Action {
   readonly type = AdminActionTypes.GET_USER_CUSTOMERS;
 
-  constructor(public payload: { uid: string }) {}
+  constructor(public payload: { uid: string }) { }
 }
 
 export class DeleteUserCustomer implements Action {
   readonly type = AdminActionTypes.DELETE_USER_CUSTOMER;
 
-  constructor(public payload: { userId: string; customerId: string }) {}
+  constructor(public payload: { userId: string; customerId: string }) { }
 }
 
-/* export class UserCustomersLoaded implements Action {
+export class UserCustomersLoaded implements Action {
   readonly type = AdminActionTypes.USERS_CUSTOMERS_LOADED;
 
   constructor(public payload: { uid: string, userCustomers: Customer[] }) { }
 }
- */
+
 export class AddAdminPrivileges implements Action {
   readonly type = AdminActionTypes.ADD_ADMIN_PRIVILEGES;
 
-  constructor(public payload: { userId: string }) {}
+  constructor(public payload: { userId: string }) { }
 }
 
 export class RemoveAdminPrivileges implements Action {
   readonly type = AdminActionTypes.REMOVE_ADMIN_PRIVILEGES;
 
-  constructor(public payload: { userId: string }) {}
+  constructor(public payload: { userId: string }) { }
 }
 
 export class AdminError implements Action {
   readonly type = AdminActionTypes.ADMIN_ERROR;
 
-  constructor(public payload: { error: any }) {}
+  constructor(public payload: { error: any }) { }
 }
 
 export type AdminActions =
   | GetUsersList
   | UsersListFetched
-  | GetUserItems
-  //| UserItemsLoaded
-  | DeleteUserItem
+  | GetUserCourses
+  | UserCoursesLoaded
+  | DeleteUserCourse
   | GetUserCustomers
-  /*   | UserCustomersLoaded
-   */
+  | UserCustomersLoaded
   | DeleteUserCustomer
   | AddAdminPrivileges
   | RemoveAdminPrivileges

@@ -1,15 +1,14 @@
 import { createSelector, createFeatureSelector } from '@ngrx/store';
 import { CoursesState } from './course.state';
-// import { AppState } from '../../reducers/index';
 
-export const getCourseState = createFeatureSelector<CoursesState>('course');
+export const getCourseState = createFeatureSelector<CoursesState>('courses');
 
 export const getCourse = createSelector(
   getCourseState,
   (course) => course.course
 );
 
-export const getAllCoursesLoaded = createSelector(
+export const getAllLoaded = createSelector(
   getCourseState,
   (course) => course.loading
 );

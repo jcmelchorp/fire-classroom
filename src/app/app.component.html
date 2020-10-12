@@ -6,5 +6,5 @@
   <router-outlet></router-outlet>
 </main>
 <footer [ngClass]="{'footer-absolute': (isLoggedIn$ | async) || (isLoading$ | async)}">
-  <app-footer [deviceXs]="deviceXs"> </app-footer>
+  <app-footer [deviceXs]="deviceXs" [isLoggedIn]="isLoggedIn$ | async"> </app-footer>
 </footer>

@@ -1,3 +1,4 @@
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { AppState } from '../../../state/app.state';
 import { Component, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
@@ -5,16 +6,18 @@ import * as fromAdmin from '../../store/admin.actions';
 import { Observable } from 'rxjs';
 import {
   getUsersList,
-  getUserItems,
+  getUserCourses,
   getSelectedUser,
   getUsersListLoading,
-  getUserItemsLoading,
+  getUserCoursesLoading,
   getUserCustomers,
   getUserCustomersLoading,
 } from '../../store/admin.selectors';
 import { User } from '../../../auth/models/user.model';
 import { map, delay, take } from 'rxjs/operators';
 import { ConfirmModalComponent } from 'src/app/shared/components/confirm-modal/confirm-modal.component';
+import { Course } from 'src/app/courses/models/course.model';
+import { Customer } from 'src/app/customers/models/customer.model';
 
 @Component({
   selector: 'app-admin',
@@ -24,21 +27,20 @@ import { ConfirmModalComponent } from 'src/app/shared/components/confirm-modal/c
 export class AdminComponent implements OnInit {
   modalRef: any;
   modalService: any;
-  constructor(private store: Store<AppState>) {}
+  constructor(
+    private store: Store<AppState>,
+    public dialogService: MatDialog
+  ) { }
 
   users$: Observable<any>;
-  //userItems$: Observable<Item[]>;
-  /* userCustomers$: Observable<Customer[]>; */
+  userCourses$: Observable<Course[]>;
+  userCustomers$: Observable<Customer[]>;
   usersListLoading$: Observable<boolean>;
-  userItemsLoading$: Observable<boolean>;
+  userCoursesLoading$: Observable<boolean>;
   userCustomersLoading$: Observable<boolean>;
   selectedUser$: Observable<any>;
   selectedUser: any;
   uid: any;
-
-  modalConfig = {
-    class: 'modal-dialog-centered',
-  };
 
   ngOnInit(): void {
     this.users$ = this.store.pipe(
@@ -52,7 +54,7 @@ export class AdminComponent implements OnInit {
       })
     );
     this.usersListLoading$ = this.store.select(getUsersListLoading);
-    this.userItemsLoading$ = this.store.select(getUserItemsLoading);
+    this.userCoursesLoading$ = this.store.select(getUserCoursesLoading);
     this.userCustomersLoading$ = this.store.select(getUserCustomersLoading);
   }
 
@@ -60,29 +62,28 @@ export class AdminComponent implements OnInit {
     this.uid = user.uid;
     this.selectedUser = user;
     this.selectedUser$ = this.store.select(getSelectedUser, user.uid);
-    /* this.userItems$ = this.store.select(getUserItems, user.uid).pipe(
-      map((items) => {
-        if (items && items.length !== 0) {
-          return items;
+    this.userCustomers$ = this.store.select(getUserCustomers, user.uid).pipe(
+      map((customers) => {
+        if (customers && customers.length !== 0) {
+          return customers;
         } else {
           return null;
         }
       })
     );
-
-     this.userCustomers$ = this.store.select(getUserCustomers, user.uid).pipe(
-       map(customers => {
-         if (customers && customers.length !== 0) {
-           return customers;
-         } else {
-           return null;
-         }
-       })
-     ); */
+    this.userCourses$ = this.store.select(getUserCourses, user.uid).pipe(
+      map((courses) => {
+        if (courses && courses.length !== 0) {
+          return courses;
+        } else {
+          return null;
+        }
+      })
+    );
   }
 
-  onItemsLoad(): void {
-    this.store.dispatch(new fromAdmin.GetUserItems({ uid: this.uid }));
+  onCoursesLoad(): void {
+    this.store.dispatch(new fromAdmin.GetUserCourses({ uid: this.uid }));
   }
 
   onCustomersLoad(): void {
@@ -93,33 +94,33 @@ export class AdminComponent implements OnInit {
     this.selectedUser = null;
   }
 
-  /*  openItemConfirmModal(item: Item): void {
-    this.modalRef = this.modalService.show(
+  openCourseConfirmModal(course: Course): void {
+    const dialogRef = this.dialogService.open(
       ConfirmModalComponent,
-      this.modalConfig
+      { width: '400px', data: {} }
     );
 
-    this.modalRef.content.confirmation
+    dialogRef.componentInstance.confirmation
       .pipe(take(1))
       .subscribe((confirmation: boolean) => {
         if (confirmation) {
           this.store.dispatch(
-            new fromAdmin.DeleteUserItem({
+            new fromAdmin.DeleteUserCourse({
               userId: this.selectedUser.key,
-              itemId: item.key,
+              courseId: course.id,
             })
           );
         }
       });
-  } */
+  }
 
-  /* openCustomerConfirmModal(customer: Customer) {
-    this.modalRef = this.modalService.show(
+  openCustomerConfirmModal(customer: Customer): void {
+    const dialogRef = this.dialogService.open(
       ConfirmModalComponent,
-      this.modalConfig
+      { width: '400px', data: {} }
     );
 
-    this.modalRef.content.confirmation
+    dialogRef.componentInstance.confirmation
       .pipe(take(1))
       .subscribe((confirmation: boolean) => {
         if (confirmation) {
@@ -131,15 +132,15 @@ export class AdminComponent implements OnInit {
           );
         }
       });
-  } */
+  }
 
-  /* onCustomerDelete(customer: Customer) {
+  onCustomerDelete(customer: Customer): void {
     this.openCustomerConfirmModal(customer);
   }
-*/
-  /* onItemDelete(item: Item): void {
-    this.openItemConfirmModal(item);
-  } */
+
+  onCourseDelete(course: Course): void {
+    this.openCourseConfirmModal(course);
+  }
 
   addAdminPrivileges(user: any): void {
     this.store.dispatch(new fromAdmin.AddAdminPrivileges({ userId: user.key }));

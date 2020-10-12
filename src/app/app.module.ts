@@ -1,4 +1,3 @@
-import { GoogleApiService } from 'src/app/auth/services/google-api.service';
 import { SharedModule } from './shared/shared.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from './material/material.module';
@@ -23,6 +22,7 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { reducers, metaReducers } from './state/app.state';
+import { CarouselModule } from 'ngx-bootstrap/carousel';
 
 @NgModule({
   declarations: [AppComponent],
@@ -53,12 +53,15 @@ import { reducers, metaReducers } from './state/app.state';
       maxAge: 25,
       logOnly: environment.production,
     }),
-    FontAwesomeModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
     }),
+    CarouselModule.forRoot(),
+    /* AccordionModule.forRoot(),
+    TabsModule.forRoot(),
+    BsDatepickerModule.forRoot(), */
   ],
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

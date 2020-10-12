@@ -1,4 +1,4 @@
-<div class="px-5 py-3">
+<div class="jumbotron">
   <div fxLayout="column" fxLayoutAlign="left">
     <p class="display-4">Administraci&oacute;n</p>
     <p class="mat-h1 text-black-50">
@@ -8,33 +8,21 @@
   </div>
 </div>
 
+
 <div *ngIf="usersListLoading$ | async" class="d-flex justify-content-center align-items-center"
-  style="margin-top: 300px">
-  <div class="spinner-grow text-primary" role="status" style="width: 4rem; height: 4rem">
-    <span class="sr-only">Procesando...</span>
-  </div>
+  fxLayoutAlign="center center">
+  <mat-spinner></mat-spinner>
 </div>
 
 <div *ngIf="!(usersListLoading$ | async)" class="container-fluid mt-3 pb-5">
+
   <app-users-list *ngIf="!selectedUser" [users]="users$ | async" (userSelected)="onUserSelect($event)"
     (addAdmin)="addAdminPrivileges($event)" (removeAdmin)="removeAdminPrivileges($event)"></app-users-list>
-  <app-user-detail *ngIf="selectedUser" [user]="selectedUser$ | async" [userItemsLoading]="userItemsLoading$ | async"
-    (detailsClosed)="onDetailsClose()" (itemsLoad)="onItemsLoad()" (customersLoad)="onCustomersLoad()"
-    (addAdmin)="addAdminPrivileges($event)" (removeAdmin)="removeAdminPrivileges($event)"></app-user-detail>
+
+  <app-user-detail *ngIf="selectedUser" [user]="selectedUser$ | async" [customers]="userCustomers$ | async"
+    [userCustomersLoading]="userCustomersLoading$ | async" [userCoursesLoading]="userCoursesLoading$ | async"
+    (detailsClosed)="onDetailsClose()" (coursesLoad)="onCoursesLoad()" (customersLoad)="onCustomersLoad()"
+    (addAdmin)="addAdminPrivileges($event)" (customerDeleted)="onCustomerDelete($event)"
+    (courseDeleted)="onCourseDelete($event)" (removeAdmin)="removeAdminPrivileges($event)"></app-user-detail>
+
 </div>
-<!-- <app-user-detail
-  *ngIf="selectedUser"
-  [user]="selectedUser$ | async"
-  [items]="userItems$ | async"
-  [customers]="userCustomers$ | async"
-  [userItemsLoading]="userItemsLoading$ | async"
-  [userCustomersLoading]="userCustomersLoading$ | async"
-  (detailsClosed)="onDetailsClose()"
-  (itemsLoad)="onItemsLoad()"
-  (customersLoad)="onCustomersLoad()"
-  (itemDeleted)="onItemDelete($event)"
-  (customerDeleted)="onCustomerDelete($event)"
-  (addAdmin)="addAdminPrivileges($event)"
-  (removeAdmin)="removeAdminPrivileges($event)"
-></app-user-detail>
- -->

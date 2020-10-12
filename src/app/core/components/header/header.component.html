@@ -1,4 +1,4 @@
-<mat-toolbar>
+<mat-toolbar [class.mat-elevation-z10]="true">
   <mat-toolbar-row fxLayoutAlign="space-between center">
     <div fxLayout="row">
       <button mat-icon-button [routerLink]="['/']">
@@ -7,7 +7,7 @@
       <!--buttons disappear on Xs devices-->
       <div *ngIf="!deviceXs && isLoggedIn && !isLoading">
         <button mat-button [routerLink]="['/items']">Items</button>
-        <button mat-button [routerLink]="['/board/all']">Board</button>
+        <button mat-button [routerLink]="['/customers']">Customers</button>
         <button mat-button [routerLink]="['/courses']">Classroom</button>
       </div>
       <!---->
@@ -28,8 +28,8 @@
   </mat-toolbar-row>
   <mat-toolbar-row *ngIf="deviceXs && isLoggedIn && !isLoading" fxLayoutAlign="space-between center">
     <button mat-button [routerLink]="['/items']">Items</button>
-    <button mat-button [routerLink]="['/board/all']">Board</button>
-    <button mat-button [routerLink]="['/classroom']">Classroom</button>
+    <button mat-button [routerLink]="['/customers']">Customers</button>
+    <button mat-button [routerLink]="['/courses']">Classroom</button>
 
   </mat-toolbar-row>
 </mat-toolbar>

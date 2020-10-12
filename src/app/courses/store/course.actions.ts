@@ -43,7 +43,7 @@ export class CoursesError implements Action {
   constructor(public payload: { error: string }) {}
 }
 
-export type Actions =
+export type CoursesActions =
   | CoursesQuery
   | CoursesLoaded
   | CourseAdded

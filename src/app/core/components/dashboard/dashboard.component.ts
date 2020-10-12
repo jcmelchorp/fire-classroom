@@ -27,10 +27,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
     private store: Store<AppState>,
     private courseService: CourseDbService,
     public googleApiService: GoogleApiService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
-    this.initCourses();
+    //this.initCourses();
     /* this.initItems();
     this.initBoards(); */
   }
@@ -48,7 +48,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     } */
   }
 
-  initCourses(): void {
+  /* initCourses(): void {
     this.coursesSub = this.store
       .pipe(
         select(getUser),
@@ -67,7 +67,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
           this.courseService.addCourses(this.courses);
         }
       });
-  }
+  } */
 
   /*  initItems() {
     this.itemSub = this.store

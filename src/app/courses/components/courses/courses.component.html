@@ -1,0 +1,22 @@
+<div class="jumbotron">
+  <div fxLayout="column" fxLayoutAlign="left">
+    <p class="display-4">Google Classroom</p>
+    <p class="mat-h1 text-black-50">
+    </p>
+  </div>
+</div>
+<div *ngIf="isLoading$ | async" class="py-5" fxLayoutAlign="center center">
+  <mat-spinner></mat-spinner> <!-- && (!loading$|async)-->
+</div>
+
+<div *ngIf="!(isLoading$ | async)" class="px-3" fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="10px"
+  fxLayoutAlign="flex-start">
+  <div fxFlex="0 1 calc(50% - 10px)" fxFlex.lt-md="100%">
+    <app-course-table [courses]="courses$ | async" (courseDeleted)="onCourseDelete($event)"
+      (courseEdited)="onCourseEdit($event)"></app-course-table>
+  </div>
+  <div fxFlex="0 1 calc(50% - 10px)" fxFlex.lt-md="100%">
+    <app-courses-list [courses]="courses$ | async" (courseDeleted)="onCourseDelete($event)"
+      (courseEdited)="onCourseEdit($event)"></app-courses-list>
+  </div>
+</div>

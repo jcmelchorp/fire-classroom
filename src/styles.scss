@@ -7,3 +7,27 @@ body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
+app-root {
+  min-height: 100%;
+  // overflow: hidden;
+  display: block;
+  position: relative;
+  background-color: #eee;
+}
+.full-page-container {
+  height: calc(100vh - 114px);
+}
+.section-header {
+  padding-top: 70px;
+  padding-bottom: 40px;
+}
+
+.footer-absolute {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+app-welcome {
+  background-color: white;
+}
