@@ -50,7 +50,7 @@ export class AdminEffects {
             const key = res.payload.key;
             const course: Course = res.payload.val();
             return {
-              key: key,
+              key: key || null,
               id: course.id,
               name: course.name,
               section: course.section,
