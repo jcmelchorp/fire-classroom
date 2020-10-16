@@ -1,5 +1,3 @@
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { AppState } from '../../../state/app.state';
 import { Component, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import * as fromAdmin from '../../store/admin.actions';
@@ -13,6 +11,8 @@ import {
   getUserCustomers,
   getUserCustomersLoading,
 } from '../../store/admin.selectors';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { AppState } from '../../../state/app.state';
 import { User } from '../../../auth/models/user.model';
 import { map, delay, take } from 'rxjs/operators';
 import { ConfirmModalComponent } from 'src/app/shared/components/confirm-modal/confirm-modal.component';
@@ -62,19 +62,19 @@ export class AdminComponent implements OnInit {
     this.uid = user.uid;
     this.selectedUser = user;
     this.selectedUser$ = this.store.select(getSelectedUser, user.uid);
-    this.userCustomers$ = this.store.select(getUserCustomers, user.uid).pipe(
-      map((customers) => {
-        if (customers && customers.length !== 0) {
-          return customers;
+    this.userCourses$ = this.store.select(getUserCourses, user.uid).pipe(
+      map(courses => {
+        if (courses && courses.length !== 0) {
+          return courses;
         } else {
           return null;
         }
       })
     );
-    this.userCourses$ = this.store.select(getUserCourses, user.uid).pipe(
-      map((courses) => {
-        if (courses && courses.length !== 0) {
-          return courses;
+    this.userCustomers$ = this.store.select(getUserCustomers, user.uid).pipe(
+      map(customers => {
+        if (customers && customers.length !== 0) {
+          return customers;
         } else {
           return null;
         }

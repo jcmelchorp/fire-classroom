@@ -1,13 +1,13 @@
 import { Course } from '../models/course.model';
 
 export interface CoursesState {
-  course: Course[] | null;
-  loading: boolean;
+  courses: Course[] | null;
+  isLoading: boolean;
   error: string;
 }
 
-export const courseInitialState: CoursesState = {
-  course: null,
-  loading: false,
+export const coursesInitialState: CoursesState = {
+  courses: null,
+  isLoading: false,
   error: null,
 };

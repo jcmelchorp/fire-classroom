@@ -1,6 +1,23 @@
 {
   "$schema": "./node_modules/@angular/service-worker/config/schema.json",
   "index": "/index.html",
+  "appData": {},
+  "navigationUrls": [],
+  "dataGroups": [
+    {
+      "name": "Google Classroom API",
+      "version": 1,
+      "cacheConfig": {
+        "strategy": "performance",
+        "timeout": "1d",
+        "maxAge": "1d",
+        "maxSize": 100
+      },
+      "urls": [
+        "https://www.googleapis.com/auth/classroom.courses"
+      ]
+    }
+  ],
   "assetGroups": [
     {
       "name": "app",
@@ -17,7 +34,7 @@
     },
     {
       "name": "assets",
-      "installMode": "lazy",
+      "installMode": "prefetch",
       "updateMode": "prefetch",
       "resources": {
         "files": [

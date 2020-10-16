@@ -1,12 +1,13 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { CoursesComponent } from './components/courses/courses.component';
+import { CoursesFirebaseComponent } from './components/courses-firebase/courses-firebase.component';
+import { CoursesShellComponent } from './containers/courses-shell/courses-shell.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: CoursesComponent,
-    children: [{ path: '', component: CoursesComponent }],
+    component: CoursesShellComponent,
+    children: [{ path: '', component: CoursesFirebaseComponent }],
   },
 ];
 
@@ -14,4 +15,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class CoursesRoutingModule {}
+export class CoursesRoutingModule { }

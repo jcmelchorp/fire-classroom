@@ -7,8 +7,8 @@ export const environment = {
     projectId: 'item-crud',
     storageBucket: 'item-crud.appspot.com',
     messagingSenderId: '798810369231',
-    appId: '1:798810369231:web:271e8fbb9476aaa8d55bba',
-    measurementId: 'G-BYQFVXV1ZL',
+    appId: '1:798810369231:web:f5596665b8dc9a3fd55bba',
+    measurementId: 'G-J3EXFJ43Q3',
     clientId:
       '798810369231-0hd8p36r9upic1rfplfs0b0jp1obl8m7.apps.googleusercontent.com',
     discoveryDocs: [

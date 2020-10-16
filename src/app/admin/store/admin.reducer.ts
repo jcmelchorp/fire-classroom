@@ -28,8 +28,7 @@ export function adminReducer(
     case AdminActionTypes.USERS_COURSES_LOADED: {
       return Object.assign({}, state, {
         userCourses: {
-          ...state.userCourses,
-          [action.payload.uid]: action.payload.userCourses,
+          ...state.userCourses, [action.payload.uid]: action.payload.userCourses
         },
         userCoursesLoading: false,
       });

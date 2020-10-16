@@ -1,5 +1,3 @@
-import { GoogleApiService } from './../../../auth/services/google-api.service';
-import { CourseDbService } from './../../services/course-db.service';
 import {
   Component,
   Input,
@@ -17,17 +15,17 @@ import { select, Store } from '@ngrx/store';
 import { Subject, Observable, from, empty, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Course } from '../../models/course.model';
-import { getAllLoaded, getCourse } from '../../store/course.selectors';
+import { getIsLoading, getCourses } from '../../store/course.selectors';
 import * as courseActions from '../../store/course.actions';
 import { AppState } from 'src/app/state/app.state';
 
 @Component({
-  selector: 'app-courses',
-  templateUrl: './courses.component.html',
-  styleUrls: ['./courses.component.scss'],
+  selector: 'app-courses-firebase',
+  templateUrl: './courses-firebase.component.html',
+  styleUrls: ['./courses-firebase.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CoursesComponent implements OnInit, OnDestroy {
+export class CoursesFirebaseComponent implements OnInit, OnDestroy {
   destroy$: Subject<boolean> = new Subject<boolean>();
   courseSub: Subscription;
   panelOpenState = false;
@@ -43,9 +41,9 @@ export class CoursesComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.isLoading$ = this.store.select(getAllLoaded);
+    this.isLoading$ = this.store.select(getIsLoading);
     this.courses$ = this.store.pipe(
-      select(getCourse),
+      select(getCourses),
       map((courses: Course[]) => {
         if (this.user && !courses) {
           this.store.dispatch(new courseActions.CoursesQuery());

@@ -5,15 +5,15 @@ export const getCustomersState = createFeatureSelector<CustomersState>('customer
 
 export const getCustomers = createSelector(
   getCustomersState,
-  customers => customers.customers
+  (customers) => customers.customers
 );
 
 export const getIsLoading = createSelector(
   getCustomersState,
-  customers => customers.isLoading
+  (customers) => customers.isLoading
 );
 
 export const getError = createSelector(
   getCustomersState,
-  customers => customers.error
+  (customers) => customers.error
 );

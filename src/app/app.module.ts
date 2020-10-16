@@ -57,9 +57,6 @@ import { CarouselModule } from 'ngx-bootstrap/carousel';
       enabled: environment.production,
     }),
     CarouselModule.forRoot(),
-    /* AccordionModule.forRoot(),
-    TabsModule.forRoot(),
-    BsDatepickerModule.forRoot(), */
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -1,4 +1,3 @@
-import { GoogleApiService } from './../services/google-api.service';
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { AuthService } from '../services/auth.service';
@@ -15,7 +14,6 @@ export class AuthEffects {
   constructor(
     private actions$: Actions,
     private authService: AuthService,
-    private googleApiService: GoogleApiService,
     private gravatarService: GravatarService,
     private router: Router
   ) { }
@@ -31,7 +29,7 @@ export class AuthEffects {
             res.user.email
           );
           const user = {
-            uid: res.user.uid,
+            uid: res.user.uid || null,
             displayName: payload.username || res.user.displayName,
             email: res.user.email,
             providerId: res.additionalUserInfo.providerId,
@@ -108,7 +106,7 @@ export class AuthEffects {
           };
           return new auth.UpdateProfileSuccess({ user: updatedUser });
         }),
-        catchError((error) => of(new auth.AuthError(error)))
+        catchError((error) => of(new auth.AuthError({ error })))
       )
     )
   );
@@ -131,17 +129,17 @@ export class AuthEffects {
           };
           return new auth.LoginSuccess({ user });
         }),
-        /*   switchMap((user: any) => {
-            if (user.isNewUser) {
-              return [
-                new auth.LoginSuccess({ user }),
-                new auth.SaveUser(user),
-                new auth.CheckUserRole({ uid: user.uid })
-              ];
-            } else {
-              return [new auth.LoginSuccess({ user }), new auth.CheckUserRole({ uid: user.uid })];
-            }
-          }), */
+        /* switchMap((user: any) => {
+          if (user.isNewUser) {
+            return [
+              new auth.LoginSuccess({ user }),
+              new auth.SaveUser({ user }),
+              new auth.CheckUserRole({ uid: user.uid })
+            ];
+          } else {
+            return [new auth.LoginSuccess({ user }), new auth.CheckUserRole({ uid: user.uid })];
+          }
+        }), */
         tap(() => this.router.navigateByUrl('')),
         catchError((error) => of(new auth.AuthError({ error })))
       )
@@ -164,7 +162,7 @@ export class AuthEffects {
   socialLogin$ = this.actions$.pipe(
     ofType(auth.AuthActionTypes.SOCIAL_LOGIN),
     map((action: auth.SocialLogin) => action.payload),
-    switchMap((payload) =>
+    switchMap(payload =>
       this.authService.socialLogin(payload.authProvider).pipe(
         map((res: any) => {
           const user = {

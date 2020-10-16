@@ -36,10 +36,16 @@ const routes: Routes = [
         canActivate: [AuthGuard],
       },
       {
-        path: 'courses',
+        path: 'firebase-classrooms',
         loadChildren: () =>
           import('./courses/courses.module').then((m) => m.CoursesModule),
         canActivate: [AuthGuard],
+      },
+      {
+        path: 'boards',
+        loadChildren: () =>
+          import('./board/board.module').then(m => m.BoardModule),
+        canActivate: [AuthGuard]
       },
     ],
   },

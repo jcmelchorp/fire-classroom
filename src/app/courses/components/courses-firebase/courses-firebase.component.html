@@ -1,4 +1,4 @@
-<div class="jumbotron">
+<div class="breadcrumb">
   <div fxLayout="column" fxLayoutAlign="left">
     <p class="display-4">Google Classroom</p>
     <p class="mat-h1 text-black-50">
@@ -6,7 +6,7 @@
   </div>
 </div>
 <div *ngIf="isLoading$ | async" class="py-5" fxLayoutAlign="center center">
-  <mat-spinner></mat-spinner> <!-- && (!loading$|async)-->
+  <mat-spinner></mat-spinner>
 </div>
 
 <div *ngIf="!(isLoading$ | async)" class="px-3" fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="10px"

@@ -5,6 +5,8 @@
         <th>Id</th>
         <th>Name</th>
         <th>Description</th>
+        <th>Priority</th>
+
         <th>Actions</th>
       </tr>
     </thead>
@@ -14,6 +16,8 @@
         <th scope="row">{{ customer.id }}</th>
         <td>{{ customer.name }}</td>
         <td>{{ customer.description }}</td>
+        <td>{{ customer.priority }}</td>
+
         <td>
           <a (click)="onEdit(customer)" class="mr-2">
             <fa-icon [icon]="edit"></fa-icon>

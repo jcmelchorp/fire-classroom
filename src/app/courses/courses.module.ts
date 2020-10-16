@@ -13,12 +13,14 @@ import * as fromCourse from './store/course.reducer';
 import { CourseTableComponent } from './components/course-table/course-table.component';
 import { CoursesRoutingModule } from './courses-routing.module';
 import { MaterialModule } from '../material/material.module';
-import { CoursesComponent } from './components/courses/courses.component';
+import { CoursesFirebaseComponent } from './components/courses-firebase/courses-firebase.component';
+import { CoursesShellComponent } from './containers/courses-shell/courses-shell.component';
 
 @NgModule({
   declarations: [
-    CoursesComponent,
+    CoursesFirebaseComponent,
     CourseTableComponent,
+    CoursesShellComponent,
   ],
   imports: [
     CommonModule,
@@ -30,7 +32,7 @@ import { CoursesComponent } from './components/courses/courses.component';
     StoreModule.forFeature('courses', fromCourse.courseReducer),
     EffectsModule.forFeature([CourseEffect]),
   ],
-  exports: [CoursesComponent],
+  exports: [CoursesFirebaseComponent],
   providers: [CourseDbService, GoogleApiService],
   entryComponents: [ConfirmModalComponent],
 })

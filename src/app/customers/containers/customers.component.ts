@@ -34,7 +34,6 @@ export class CustomersComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.isLoading$ = this.store.select(getIsLoading);
-
     this.customersSub = this.store.select(getCustomers).pipe(
       map((customers: Customer[]) => {
         if (this.user && !customers) {
@@ -66,12 +65,13 @@ export class CustomersComponent implements OnInit, OnDestroy {
   onAddCustomer(): void {
     const dialogRef = this.dialogService.open(CustomersModalComponent, {
       width: '400px',
-      data: {},
+      data: {
+        priority: this.customers.length,
+        id: this.lastCustomerIndex + 1
+      },
     });
-    dialogRef.componentInstance.heading = 'New Customer';
+    dialogRef.componentInstance.heading = 'Create new customer';
     dialogRef.componentInstance.customerData.subscribe((customer: Customer) => {
-      console.log(customer);
-
       this.store.dispatch(new fromCustomers.CustomersAdded({ customer }));
     });
   }

@@ -1,6 +1,8 @@
 export interface Customer {
-    key?: any;
-    id?: number;
-    name?: string;
-    description?: string;
+  key?: string;
+  id?: number;
+  name?: string;
+  description?: string;
+  priority?: number;
+
 }

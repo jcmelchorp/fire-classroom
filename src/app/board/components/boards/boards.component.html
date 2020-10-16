@@ -1,0 +1,21 @@
+<div class="breadcrumb">
+  <div fxLayout="column" fxLayoutAlign="left">
+    <p class="display-4">Firestore Boards</p>
+    <p class="mat-h1 text-black-50">A collection of user's boards.
+    </p>
+  </div>
+</div>
+<div cdkDropList cdkDropListOrientation="horizontal" class="boards" (cdkDropListDropped)="drop($event)">
+  <!-- fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="10px" fxLayoutAlign="flex-start" -->
+  <app-board cdkDrag *ngFor="let board of boards" [board]="board">
+    <!-- fxFlex="0 1 calc(33.3% - 10px)" fxFlex.lt-md="0 1 calc(50% - 10px)" fxFlex.lt-sm="100%" -->
+    <mat-icon cdkDragHandle class="handle">drag_indicator</mat-icon>
+  </app-board>
+  <div class="board-button">
+    <!-- fxFlex="0 1 calc(33.3% - 10px)" fxFlex.lt-md="0 1 calc(50% - 10px)" fxFlex.lt-sm="100%" -->
+    <button mat-fab color="warn" cdkDragDisabled (click)="openBoardDialog()">
+      <fa-icon [icon]="plus" size="lg"></fa-icon>
+    </button>
+  </div>
+
+</div>

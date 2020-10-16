@@ -14,7 +14,7 @@
   <mat-spinner></mat-spinner>
 </div>
 
-<div *ngIf="!(usersListLoading$ | async)" class="container-fluid mt-3 pb-5">
+<div class="p-5" *ngIf="!(usersListLoading$ | async)">
 
   <app-users-list *ngIf="!selectedUser" [users]="users$ | async" (userSelected)="onUserSelect($event)"
     (addAdmin)="addAdminPrivileges($event)" (removeAdmin)="removeAdminPrivileges($event)"></app-users-list>

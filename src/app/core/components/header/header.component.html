@@ -6,9 +6,9 @@
       </button>
       <!--buttons disappear on Xs devices-->
       <div *ngIf="!deviceXs && isLoggedIn && !isLoading">
-        <button mat-button [routerLink]="['/items']">Items</button>
+        <button mat-button [routerLink]="['/boards']">Boards</button>
+        <button mat-button [routerLink]="['/firebase-classrooms']">Classroom</button>
         <button mat-button [routerLink]="['/customers']">Customers</button>
-        <button mat-button [routerLink]="['/courses']">Classroom</button>
       </div>
       <!---->
     </div>
@@ -27,9 +27,9 @@
     </div>
   </mat-toolbar-row>
   <mat-toolbar-row *ngIf="deviceXs && isLoggedIn && !isLoading" fxLayoutAlign="space-between center">
-    <button mat-button [routerLink]="['/items']">Items</button>
+    <button mat-button [routerLink]="['/boards']">Boards</button>
+    <button mat-button [routerLink]="['/firebase-classrooms']">Classroom</button>
     <button mat-button [routerLink]="['/customers']">Customers</button>
-    <button mat-button [routerLink]="['/courses']">Classroom</button>
 
   </mat-toolbar-row>
 </mat-toolbar>
@@ -41,8 +41,8 @@
 <!-- -->
 <!-- Menu Items -->
 <mat-menu #menu="matMenu" fxLayoutAlign="end">
-  <button mat-menu-item [routerLink]="['/under-construction']">Ayuda</button>
-  <button mat-menu-item [routerLink]="['/about']">Acerca de...</button>
+  <button mat-menu-item [routerLink]="['under-construction']">Ayuda</button>
+  <button mat-menu-item [routerLink]="['about']">Acerca de...</button>
 </mat-menu>
 <!-- -->
 <!-- Menu Items -->

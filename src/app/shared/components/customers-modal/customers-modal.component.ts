@@ -1,9 +1,10 @@
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 
 import { Customer } from '../../../customers/models/customer.model';
 import { Subject } from 'rxjs';
-import { NgForm } from '@angular/forms';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+
+import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { faWindowClose } from '@fortawesome/free-regular-svg-icons';
 
 @Component({
@@ -12,23 +13,32 @@ import { faWindowClose } from '@fortawesome/free-regular-svg-icons';
   styleUrls: ['./customers-modal.component.scss']
 })
 export class CustomersModalComponent implements OnInit {
-  @ViewChild('customerForm', { static: true }) customerForm: NgForm;
   close = faWindowClose;
   heading: string;
   customer: Customer = {};
+  customerForm: FormGroup;
 
   customerData: Subject<Customer> = new Subject();
 
   constructor(
-    public dialogService: MatDialog,
+    public dialogRef: MatDialogRef<CustomersModalComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    public fb: FormBuilder
   ) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.customerForm = this.fb.group({
+      id: new FormControl(this.data.id, [Validators.required]),
+      priority: new FormControl(this.data.priority, [Validators.required]),
+      name: new FormControl(this.data.name, [Validators.required]),
+      description: new FormControl(this.data.description, [Validators.required])
+    });
+  }
 
   onSave() {
     if (this.customerForm.valid) {
       this.customerData.next(this.customerForm.value);
-      this.dialogService.closeAll();
+      this.dialogRef.close();
     } else {
       const controls = this.customerForm.controls;
       Object.keys(controls).forEach(controlName => controls[controlName].markAsTouched());

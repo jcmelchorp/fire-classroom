@@ -9,11 +9,25 @@
         ".read": "auth.uid == $item || root.child('admins').child(auth.uid).val() === true"
       }
     },
+    "customers": {
+      ".read": "root.child('admins').child(auth.uid).val() === true",
+      "$customer": {
+        ".write": "auth.uid == $customer || root.child('admins').child(auth.uid).val() === true",
+        ".read": "auth.uid == $customer || root.child('admins').child(auth.uid).val() === true"
+      }
+    },
     "boards": {
       ".read": "root.child('admins').child(auth.uid).val() === true",
       "$board": {
         ".write": "auth.uid == $board || root.child('admins').child(auth.uid).val() === true",
         ".read": "auth.uid == $board || root.child('admins').child(auth.uid).val() === true"
+      }
+    },
+    "tasks": {
+      ".read": "root.child('admins').child(auth.uid).val() === true",
+      "$task": {
+        ".write": "auth.uid == $task || root.child('admins').child(auth.uid).val() === true",
+        ".read": "auth.uid == $task || root.child('admins').child(auth.uid).val() === true"
       }
     },
     "courses": {

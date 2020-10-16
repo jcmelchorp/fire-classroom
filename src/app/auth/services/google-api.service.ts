@@ -3,7 +3,7 @@ import { environment } from 'src/environments/environment';
 import { Injectable } from '@angular/core';
 import { from, Observable, of } from 'rxjs';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { auth } from 'firebase/app';
+import * as firebase from 'firebase/app';
 declare var gapi;
 @Injectable({
   providedIn: 'root',
@@ -38,7 +38,7 @@ export class GoogleApiService {
     const googleAuth = gapi.auth2.getAuthInstance();
     const googleUser = await googleAuth.signIn();
     const token = googleUser.getAuthResponse().id_token;
-    const credential = auth.GoogleAuthProvider.credential(token);
+    const credential = firebase.auth.GoogleAuthProvider.credential(token);
     return this.afAuth.signInWithCredential(credential);
   }
 

@@ -29,10 +29,9 @@ export class CourseDbService {
     return courses.push(course);
   }
   addCourses(courses: Course[]): void {
-    const uid = this.userId;
     if (courses) {
       courses.forEach((course: Course) => {
-        this.db.list(`courses/${uid}`).push(course);
+        this.db.list(`courses/${this.userId}`).push(course);
       });
     }
   }

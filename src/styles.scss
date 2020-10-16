@@ -9,25 +9,14 @@ body {
 }
 app-root {
   min-height: 100%;
-  // overflow: hidden;
+  overflow: hidden;
   display: block;
   position: relative;
-  background-color: #eee;
-}
-.full-page-container {
-  height: calc(100vh - 114px);
-}
-.section-header {
-  padding-top: 70px;
-  padding-bottom: 40px;
+  background-color: #ffffff;
 }
 
 .footer-absolute {
   position: absolute;
   bottom: 0;
   width: 100%;
-}
-
-app-welcome {
-  background-color: white;
 }

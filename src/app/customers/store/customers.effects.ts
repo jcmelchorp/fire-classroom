@@ -27,9 +27,10 @@ export class CustomersEffects {
             const key = res.payload.key;
             const customer: Customer = res.payload.val();
             return {
-              key: key,
+              key: key || null,
               id: customer.id,
               name: customer.name,
+              priority: customer.priority,
               description: customer.description
             };
           });

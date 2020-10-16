@@ -1,4 +1,3 @@
-import { UpdateProfile } from './../store/auth.actions';
 import { GoogleApiService } from 'src/app/auth/services/google-api.service';
 import { switchMap } from 'rxjs/operators';
 import {
@@ -12,7 +11,6 @@ import * as firebase from 'firebase/app';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { User } from '../models/user.model';
 import { Router } from '@angular/router';
-// import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root',
 })
@@ -39,38 +37,26 @@ export class AuthService {
     this.user$ = afAuth.authState; */
   }
 
-  updateUserData(user: User) {
-    const userRef: AngularFirestoreDocument<User> = this.afs.doc(
-      `users/${user.uid}`
-    );
-    const data: User = {
-      uid: user.uid,
-      displayName: user.displayName,
+  createUser(user: User) {
+    return this.afs.collection('users').add({
+      dispalyName: user.displayName,
       email: user.email,
+      photoURL: user.photoUrl,
       providerId: user.providerId,
-      photoUrl: user.photoUrl,
       isAdmin: user.isAdmin,
       isNewUser: user.isNewUser,
-      isOnline: user.isOnline,
-    };
+      isOnline: user.isOnline
+    });
+  }
+
+  updateUserData({ uid, displayName, email, providerId, photoUrl, isAdmin }: User) {
+    const userRef: AngularFirestoreDocument<User> = this.afs.doc(`users/${uid}`);
+    const data: User = { uid, displayName, email, providerId, photoUrl, isAdmin };
     return userRef.set(data, { merge: true });
   }
 
-  // Initialize the Google API client with desired scopes
-  /* initClient() {
-    gapi.load('client', () => {
-      console.log('loaded client')
 
-      // It's OK to expose these credentials, they are client safe.
-      gapi.client.init({
-        apiKey: environment.firebaseConfig.apiKey,
-        clientId: environment.firebaseConfig.clientId,
-        discoveryDocs: environment.firebaseConfig.discoveryDocs,
-        scope: environment.firebaseConfig.scopes
-      })
-      gapi.client.load('classroom', 'v1', () => console.log('loaded classroom'));
-    });
-  } */
+  /** Firebase Database */
   register(
     email: string,
     password: string
@@ -84,7 +70,7 @@ export class AuthService {
   ) {
     const userProfile = firebase.auth().currentUser;
     if (userProfile) {
-      return from<any>(userProfile.updateProfile({ displayName: newName, photoURL: newPhotoUrl }));
+      return from(userProfile.updateProfile({ displayName: newName, photoURL: newPhotoUrl })) as any;
     }
   }
 
@@ -98,6 +84,7 @@ export class AuthService {
   socialLogin(authProvider: string): Observable<firebase.auth.UserCredential> {
     let provider: any;
     if (authProvider === 'google') {
+      provider = new firebase.auth.GoogleAuthProvider();
       return from(this.googleApiService.login());
     }
 
@@ -109,11 +96,6 @@ export class AuthService {
       provider = new firebase.auth.TwitterAuthProvider();
     }
     return from(this.afAuth.signInWithPopup(provider));
-    /* cred.then((credential) => {
-      this.updateUserData(credential.user);
-    }); */
-    /* const cred = this.googleApiService.login();
-    return from(cred); */
   }
 
   logout(uid: string): Observable<void> {
@@ -121,18 +103,15 @@ export class AuthService {
     return from(this.afAuth.signOut());
   }
 
-  saveUser(user: User): Promise<void> {
+  saveUser(user: User) {
+    this.createUser(user);
     const users = this.db.object('users/' + user.uid);
     return users.set(user);
   }
 
   updateOnlineStatus(uid: string, status: boolean): Observable<void> {
     if (status) {
-      this.db.database
-        .ref()
-        .child('users/' + uid)
-        .onDisconnect()
-        .update({ isOnline: false });
+      this.db.database.ref().child('users/' + uid).onDisconnect().update({ isOnline: false });
     }
     return from(this.db.object('users/' + uid).update({ isOnline: status }));
   }
