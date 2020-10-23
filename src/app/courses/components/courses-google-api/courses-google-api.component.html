@@ -1,0 +1,23 @@
+<div class="breadcrumb">
+  <div fxLayout="column" fxLayoutAlign="left">
+    <p class="display-4">Google Classroom</p>
+    <p class="mat-h1 text-black-50">
+    </p>
+  </div>
+</div>
+<div>
+  <div class="p-5">
+    <app-table *ngIf="courses$|async" [courses]="courses$|async" (courseDeleted)="onCourseDelete($event)"
+    (courseEdited)="onCourseEdit($event)"></app-table>
+  </div>
+
+</div>
+<!-- <div *ngIf="isLoading$ | async" class="py-5" fxLayoutAlign="center center">
+  <mat-spinner></mat-spinner>
+</div> -->
+<!--  <button fxLayout="row" fxLayoutAlign="center center" mat-raised-button (click)="this.googleApiService.listCourses()">From Google Classroom</button>
+ -->   <!-- <app-course-table *ngIf="courses" [courses]="courses" (courseDeleted)="onCourseDelete($event)"
+    (courseEdited)="onCourseEdit($event)"></app-course-table>
+  <app-courses-list *ngIf="courses" [courses]="courses" (courseDeleted)="onCourseDelete($event)"
+    (courseEdited)="onCourseEdit($event)"></app-courses-list>
+ -->

@@ -1,4 +1,4 @@
-<div class="courses-list d-flex flex-wrap fadeIn animated">
+<div class="p-5">
   <mat-list>
     <div *ngFor="let course of courses; trackBy: trackByFunction">
       <app-course [course]="course" [editable]="editable" (deleted)="onCourseDelete($event)"

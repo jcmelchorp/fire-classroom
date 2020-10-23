@@ -15,12 +15,21 @@ import { CoursesRoutingModule } from './courses-routing.module';
 import { MaterialModule } from '../material/material.module';
 import { CoursesFirebaseComponent } from './components/courses-firebase/courses-firebase.component';
 import { CoursesShellComponent } from './containers/courses-shell/courses-shell.component';
+import { CoursesGoogleApiComponent } from './components/courses-google-api/courses-google-api.component';
+import { CoursesComponent } from './components/courses/courses.component';
+import { TableComponent } from './components/table/table.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
   declarations: [
     CoursesFirebaseComponent,
     CourseTableComponent,
     CoursesShellComponent,
+    CoursesGoogleApiComponent,
+    CoursesComponent,
+    TableComponent,
   ],
   imports: [
     CommonModule,
@@ -31,9 +40,12 @@ import { CoursesShellComponent } from './containers/courses-shell/courses-shell.
     SharedModule,
     StoreModule.forFeature('courses', fromCourse.courseReducer),
     EffectsModule.forFeature([CourseEffect]),
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
   ],
   exports: [CoursesFirebaseComponent],
-  providers: [CourseDbService, GoogleApiService],
+  providers: [CourseDbService],
   entryComponents: [ConfirmModalComponent],
 })
 export class CoursesModule { }

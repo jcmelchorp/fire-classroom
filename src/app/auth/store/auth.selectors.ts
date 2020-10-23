@@ -3,7 +3,10 @@ import { AppState } from 'src/app/state/app.state';
 
 export const getAuthState = (state: AppState) => state.auth;
 
-export const getUser = createSelector(getAuthState, (auth) => auth.user);
+export const getUser = createSelector(
+  getAuthState,
+  (auth) => auth.user
+);
 
 export const getIsLoggedIn = createSelector(
   getAuthState,
@@ -15,6 +18,12 @@ export const getIsLoading = createSelector(
   (auth) => auth.isLoading
 );
 
-export const getIsAdmin = createSelector(getAuthState, (auth) => auth.isAdmin);
+export const getIsAdmin = createSelector(
+  getAuthState,
+  (auth) => auth.isAdmin
+);
 
-export const getError = createSelector(getAuthState, (auth) => auth.error);
+export const getError = createSelector(
+  getAuthState,
+  (auth) => auth.error
+);

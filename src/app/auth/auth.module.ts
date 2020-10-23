@@ -27,6 +27,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     EffectsModule.forFeature([AuthEffects]),
   ],
   declarations: [RegisterComponent, LoginComponent],
+  exports:[RegisterComponent],
   providers: [AuthService, GoogleApiService],
 })
 export class AuthModule {}

@@ -5,7 +5,7 @@
   </div>
 </div>
 
-<div class="px-5 py-3" fxLayout="row wrap" fxLayout.lt-md="column" fxLayoutGap="10px" fxLayoutAlign="flex-start">
+<div class="p-5 pb-3" fxLayout="row wrap" fxLayout.lt-md="column" fxLayoutGap="10px" fxLayoutAlign="flex-start">
   <div class="px-5 mt-3" fxFlex="0 1 calc(40% - 10px)" fxFlex.lt-md="100%">
     <app-profile-user [user]="user$ | async" (logout)="logoutUser($event)"></app-profile-user>
   </div>

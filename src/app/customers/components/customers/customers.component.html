@@ -7,14 +7,20 @@
 </div>
 
 <div class="p-5">
-  <button mat-raised-button color="primary" (click)="onAddCustomer()">Add customer</button>
+  <button mat-fab color="primary" (click)="onAddCustomer()"><fa-icon [icon]="plus" size="lg"></fa-icon></button>
   <div *ngIf="isLoading$ | async" class="d-flex justify-content-center align-items-center"
     fxLayoutAlign="center center">
     <mat-spinner></mat-spinner>
   </div>
-  <div *ngIf="customers" class="mt-4 white">
+  <div *ngIf="!(isLoading$ | async) && customers.length>0" class="mt-4 white">
     <app-customers-list [customers]="customers" (customerEdited)="onCustomerEdit($event)"
       (customerDeleted)="onCustomerDelete($event)"></app-customers-list>
   </div>
-
+<div>
+<mat-card>
+  <mat-card-content>
+    No customers found
+  </mat-card-content>
+</mat-card>
+</div>
 </div>

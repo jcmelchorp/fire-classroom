@@ -1,17 +1,16 @@
-import { DataSource } from '@angular/cdk/table';
-import { Input } from '@angular/core';
+import { DataSource } from '@angular/cdk/collections';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { Observable, merge, of } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { Observable, of as observableOf, merge } from 'rxjs';
 import { Course } from '../../models/course.model';
-
 /**
  * Data source for the Table view. This class should
  * encapsulate all logic for fetching and manipulating the displayed data
  * (including sorting, pagination, and filtering).
  */
-export class TableDatasource extends DataSource<Course> {
+export class TableDataSource extends DataSource<Course> {
+
   data: Course[];
   paginator: MatPaginator;
   sort: MatSort;
@@ -29,23 +28,21 @@ export class TableDatasource extends DataSource<Course> {
     // Combine everything that affects the rendered data into one update
     // stream for the data-table to consume.
     const dataMutations = [
-      of(this.data),
+      observableOf(this.data),
       this.paginator.page,
-      this.sort.sortChange,
+      this.sort.sortChange
     ];
 
-    return merge(...dataMutations).pipe(
-      map(() => {
-        return this.getPagedData(this.getSortedData([...this.data]));
-      })
-    );
+    return merge(...dataMutations).pipe(map(() => {
+      return this.getPagedData(this.getSortedData([...this.data]));
+    }));
   }
 
   /**
    *  Called when the table is being destroyed. Use this function, to clean up
    * any open connections or free any held resources that were set up during connect.
    */
-  disconnect() {}
+  disconnect() { }
 
   /**
    * Paginate the data (client-side). If you're using server-side pagination,
@@ -68,12 +65,9 @@ export class TableDatasource extends DataSource<Course> {
     return data.sort((a, b) => {
       const isAsc = this.sort.direction === 'asc';
       switch (this.sort.active) {
-        case 'id':
-          return compare(a.id, b.id, isAsc);
-        case 'name':
-          return compare(a.name, b.name, isAsc);
-        default:
-          return 0;
+        case 'name': return compare(a.name, b.name, isAsc);
+        case 'id': return compare(+a.id, +b.id, isAsc);
+        default: return 0;
       }
     });
   }

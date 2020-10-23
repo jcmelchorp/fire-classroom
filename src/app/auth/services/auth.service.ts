@@ -1,16 +1,16 @@
-import { GoogleApiService } from 'src/app/auth/services/google-api.service';
-import { switchMap } from 'rxjs/operators';
 import {
   AngularFirestore,
   AngularFirestoreDocument,
+  DocumentReference,
 } from '@angular/fire/firestore';
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { GoogleApiService } from 'src/app/auth/services/google-api.service';
 import { from, Observable, of } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 import * as firebase from 'firebase/app';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { User } from '../models/user.model';
-import { Router } from '@angular/router';
 @Injectable({
   providedIn: 'root',
 })
@@ -20,10 +20,9 @@ export class AuthService {
     private afAuth: AngularFireAuth,
     private db: AngularFireDatabase,
     private afs: AngularFirestore,
-    private googleApiService: GoogleApiService,
-    private router: Router
+    private googleApiService: GoogleApiService
   ) {
-    this.user$ = this.afAuth.authState.pipe(
+    this.user$ = this.getAuthState().pipe(
       switchMap((user) => {
         if (user) {
           return this.afs.doc<User>(`users/${user.uid}`).valueChanges();
@@ -32,12 +31,9 @@ export class AuthService {
         }
       })
     );
-
-    /* this.initClient();
-    this.user$ = afAuth.authState; */
   }
 
-  createUser(user: User) {
+  createUser(user: User): Promise<DocumentReference> {
     return this.afs.collection('users').add({
       dispalyName: user.displayName,
       email: user.email,
@@ -45,40 +41,30 @@ export class AuthService {
       providerId: user.providerId,
       isAdmin: user.isAdmin,
       isNewUser: user.isNewUser,
-      isOnline: user.isOnline
+      isOnline: user.isOnline,
     });
   }
 
-  updateUserData({ uid, displayName, email, providerId, photoUrl, isAdmin }: User) {
+  /* updateUserData({ uid, displayName, email, providerId, photoUrl, isAdmin }: User): Promise<void> {
     const userRef: AngularFirestoreDocument<User> = this.afs.doc(`users/${uid}`);
     const data: User = { uid, displayName, email, providerId, photoUrl, isAdmin };
     return userRef.set(data, { merge: true });
-  }
-
+  } */
 
   /** Firebase Database */
-  register(
-    email: string,
-    password: string
-  ): Observable<firebase.auth.UserCredential> {
+  register(email: string, password: string): Observable<firebase.auth.UserCredential> {
     return from(this.afAuth.createUserWithEmailAndPassword(email, password));
   }
 
-  updateProfile(
-    newName: string,
-    newPhotoUrl: string
-  ) {
-    const userProfile = firebase.auth().currentUser;
-    if (userProfile) {
-      return from(userProfile.updateProfile({ displayName: newName, photoURL: newPhotoUrl })) as any;
-    }
+  login(email: string, password: string): Observable<firebase.auth.UserCredential> {
+    return from(this.afAuth.signInWithEmailAndPassword(email, password));
   }
 
-  login(
-    email: string,
-    password: string
-  ): Observable<firebase.auth.UserCredential> {
-    return from(this.afAuth.signInWithEmailAndPassword(email, password));
+  updateProfile(newName: string, newPhotoUrl: string): any {
+    const userProfile = this.getCurrentUser();
+    if (userProfile) {
+      return from(userProfile) as any;
+    }
   }
 
   socialLogin(authProvider: string): Observable<firebase.auth.UserCredential> {
@@ -103,7 +89,7 @@ export class AuthService {
     return from(this.afAuth.signOut());
   }
 
-  saveUser(user: User) {
+  saveUser(user: User): Promise<void> {
     this.createUser(user);
     const users = this.db.object('users/' + user.uid);
     return users.set(user);
@@ -129,7 +115,7 @@ export class AuthService {
   }
 
   getAccessToken(): Promise<string> {
-    return this.afAuth.currentUser.then((user) => {
+    return this.getCurrentUser().then((user) => {
       return user.getIdToken();
     });
   }

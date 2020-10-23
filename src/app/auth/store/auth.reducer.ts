@@ -1,10 +1,7 @@
 import { authInitialState, AuthState } from './auth.state';
 import { AuthAction, AuthActionTypes } from './auth.actions';
 
-export function authReducer(
-  state = authInitialState,
-  action: AuthAction
-): AuthState {
+export function authReducer(state = authInitialState, action: AuthAction): AuthState {
   switch (action.type) {
     case AuthActionTypes.LOGIN_SUCCESS: {
       return Object.assign({}, state, {
@@ -48,7 +45,6 @@ export function authReducer(
         isLoggedIn: false,
       });
     }
-
     default:
       return state;
   }

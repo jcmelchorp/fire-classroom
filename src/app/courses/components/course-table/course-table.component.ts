@@ -1,4 +1,5 @@
-import { from, Observable, of, Subject, Subscription } from 'rxjs';
+import { GoogleApiService } from 'src/app/auth/services/google-api.service';
+import { from, merge, Observable, of, Subject, Subscription } from 'rxjs';
 import { Course } from './../../models/course.model';
 import {
   AfterViewInit,
@@ -6,14 +7,15 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnDestroy,
   OnInit,
   Output,
   ViewChild,
 } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { MatTable, MatTableDataSource } from '@angular/material/table';
-import { TableDatasource } from './table-datasource';
+import { MatTable } from '@angular/material/table';
+import { CourseDataSource } from './course-data-source';
 import {
   trigger,
   state,
@@ -21,6 +23,7 @@ import {
   transition,
   animate,
 } from '@angular/animations';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-course-table',
@@ -41,40 +44,46 @@ import {
     ]),
   ],
 })
-export class CourseTableComponent implements AfterViewInit, OnInit {
+export class CourseTableComponent implements OnInit, OnDestroy {
   @Input() courses: Course[];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatTable) table: MatTable<Course>;
-  destroy$: Subject<boolean> = new Subject<boolean>();
-  dataSource: TableDatasource;
-  expandedElement: any;
-  displayedColumns = ['name', 'section'];
-  isTableExpanded: boolean;
-  isExpansionDetailRow = (i: number, row: object) =>
-    row.hasOwnProperty('detailRow');
+  dataLength: number;
+  dataSource: CourseDataSource;
+  displayedColumns = ['name', 'section', 'courseState'];
 
-  ngOnInit() {
-    this.dataSource = new TableDatasource();
-    this.dataSource.data = this.courses;
+  destroy$: Subject<boolean> = new Subject<boolean>();
+
+
+  constructor(private googleApiService: GoogleApiService) { }
+
+  ngOnInit(): void {
+    this.dataSource = new CourseDataSource(this.googleApiService);
+
   }
+  /*   ngAfterViewInit() {
+      this.dataSource.sort = this.sort;
+      this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
+      merge(this.sort.sortChange, this.paginator.page)
+        .pipe(
+          tap(() => this.loadCoursesPage())
+        )
+        .subscribe();
+
+    }
+    loadCoursesPage() {
+      this.dataSource.loadCourses(this.paginator.pageSize);
+    } */
+
   onRowClicked(row) {
     console.log('Row clicked: ', row);
   }
-  ngAfterViewInit() {
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
-    this.table.dataSource = this.dataSource;
-  }
+
   ngOnDestroy(): void {
     this.destroy$.next(true);
     // Unsubscribe from the subject
     this.destroy$.unsubscribe();
   }
-  toggleTableRows() {
-    this.isTableExpanded = !this.isTableExpanded;
-    this.dataSource.data.forEach((row: any) => {
-      row.isExpanded = this.isTableExpanded;
-    });
-  }
+
 }

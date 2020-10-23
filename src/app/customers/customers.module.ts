@@ -3,7 +3,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from './../material/material.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CustomersComponent } from './containers/customers.component';
+import { CustomersComponent } from './components/customers/customers.component';
 import { FormsModule } from '@angular/forms';
 import * as fromCustomers from './store/customers.reducer';
 import { StoreModule } from '@ngrx/store';

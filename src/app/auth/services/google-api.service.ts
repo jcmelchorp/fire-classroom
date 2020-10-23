@@ -1,7 +1,8 @@
+import { map, switchMap, mergeMap, catchError } from 'rxjs/operators';
 import { Course } from '../../courses/models/course.model';
 import { environment } from 'src/environments/environment';
-import { Injectable } from '@angular/core';
-import { from, Observable, of } from 'rxjs';
+import { Injectable, Output } from '@angular/core';
+import { from, Observable, Subscription } from 'rxjs';
 import { AngularFireAuth } from '@angular/fire/auth';
 import * as firebase from 'firebase/app';
 declare var gapi;
@@ -10,7 +11,7 @@ declare var gapi;
 })
 export class GoogleApiService {
   user$: Observable<firebase.User>;
-  courses: Course[];
+  courses$: Observable<Course[]>;
   calendarItems: any[];
   constructor(public afAuth: AngularFireAuth) {
     this.initClient();
@@ -23,7 +24,6 @@ export class GoogleApiService {
 
   initClient(): void {
     gapi.load('client', () => {
-      console.log('loaded client');
       gapi.client.init({
         apiKey: environment.firebaseConfig.apiKey,
         clientId: environment.firebaseConfig.clientId,
@@ -48,11 +48,38 @@ export class GoogleApiService {
 
   /**
    * Lists all course names and ids.
+   * Print the names of the first 10 courses the user has access to. If
+   * no courses are found an appropriate message is printed.
    */
-  async listCourses() {
-    const courseList = gapi.client.classroom.courses.list({});
-    this.courses = courseList;
+  listCourses() {
+    this.courses$ = gapi.client.classroom.courses.list().then(response => {
+      return from<Course[]>(response.result.courses);
+    });
   }
+  async listTeachers(courseId: number) {
+    return await gapi.client.classroom.teachers.list({ courseId });
+  }
+
+
+  /* async listCourses() {
+   const courses = await gapi.client.classroom.courses.list();
+   if (courses.length === 0) {
+     console.log('No courses found.');
+   } else {
+     this.courses = courses.result.courses;
+     const courseData = courses.result.map((course: Course) => {
+        const ownerName = gapi.client.classroom.courses.teachers.get(
+         course.id,
+         course.ownerId
+       ).profile.name.fullName;
+       const data = `${ course.name } : ${ course.id } : ${ ownerName } `;
+       console.log(course);
+       return course;
+     });
+     return this.courses || courseData;
+   }
+
+ } */
 
   /* async listCourses() {
     const courses = gapi.client.classroom.courses.list();
@@ -66,7 +93,7 @@ export class GoogleApiService {
           course.id,
           course.ownerId
         ).profile.name.fullName;
-        const data = `${course.name} : ${course.id} : ${ownerName}`;
+        const data = `${ course.name } : ${ course.id } : ${ ownerName } `;
         console.log(data);
         return data;
       });

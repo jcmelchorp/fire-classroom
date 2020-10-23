@@ -1,15 +1,16 @@
-import { CustomersService } from './../services/customers.service';
-import { Customer } from './../models/customer.model';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { CustomersService } from './../../services/customers.service';
+import { Customer } from './../../models/customer.model';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 
-import * as fromCustomers from './../store/customers.actions';
+import * as fromCustomers from './../../store/customers.actions';
 import { Subscription, Observable } from 'rxjs';
-import { getCustomers, getIsLoading } from '../store/customers.selectors';
+import { getCustomers, getIsLoading } from '../../store/customers.selectors';
 import { take, map } from 'rxjs/operators';
-import { ConfirmModalComponent } from '../../shared/components/confirm-modal/confirm-modal.component';
-import { CustomersModalComponent } from '../../shared/components/customers-modal/customers-modal.component';
+import { ConfirmModalComponent } from '../../../shared/components/confirm-modal/confirm-modal.component';
+import { CustomersModalComponent } from '../../../shared/components/customers-modal/customers-modal.component';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AppState } from 'src/app/state/app.state';
 
@@ -24,7 +25,7 @@ export class CustomersComponent implements OnInit, OnDestroy {
   customers: Customer[] | null;
   customersSub: Subscription;
   lastCustomerIndex: number;
-
+  plus = faPlus;
   constructor(
     private dialogService: MatDialog,
     private customersService: CustomersService,

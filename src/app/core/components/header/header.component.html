@@ -7,7 +7,7 @@
       <!--buttons disappear on Xs devices-->
       <div *ngIf="!deviceXs && isLoggedIn && !isLoading">
         <button mat-button [routerLink]="['/boards']">Boards</button>
-        <button mat-button [routerLink]="['/firebase-classrooms']">Classroom</button>
+        <button mat-button [routerLink]="['/courses/google']">Courses</button>
         <button mat-button [routerLink]="['/customers']">Customers</button>
       </div>
       <!---->
@@ -15,7 +15,7 @@
     <div fxLayout="row">
       <button *ngIf="isLoggedIn && !isLoading" mat-icon-button [matMenuTriggerFor]="useractions"
         aria-label="Example icon-button with a menu" class="mx-1">
-        <img class="img-thumbnail rounded-circle" src="{{ user.photoUrl }}" />
+        <img class="img-thumbnail rounded-circle" src="{{ (user.photoUrl)  ? user.photoUrl : '/assets/images/dummy-user.png'}}" />
       </button>
       <button *ngIf="!isLoggedIn && !isLoading" mat-icon-button [matMenuTriggerFor]="users"
         aria-label="Example icon-button with a menu" class="mx-1">
@@ -28,7 +28,7 @@
   </mat-toolbar-row>
   <mat-toolbar-row *ngIf="deviceXs && isLoggedIn && !isLoading" fxLayoutAlign="space-between center">
     <button mat-button [routerLink]="['/boards']">Boards</button>
-    <button mat-button [routerLink]="['/firebase-classrooms']">Classroom</button>
+    <button mat-button [routerLink]="['/courses/google']">Courses</button>
     <button mat-button [routerLink]="['/customers']">Customers</button>
 
   </mat-toolbar-row>
