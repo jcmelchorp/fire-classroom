@@ -18,6 +18,12 @@ const routes: Routes = [
     children: [
       { path: '', component: MainComponent },
       {
+        path: 'quizzes',
+        loadChildren: () =>
+          import('./quizzes/quizzes.module').then(m => m.QuizzesModule)
+      },
+
+      {
         path: 'customers',
         loadChildren: () =>
           import('./customers/customers.module').then((m) => m.CustomersModule),

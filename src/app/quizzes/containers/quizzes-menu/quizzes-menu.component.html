@@ -1,0 +1,19 @@
+<mat-toolbar>
+  <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="sidenavtwo.toggle()"
+    [ngClass]="{ hidden: !deviceSm }">
+    <fa-icon aria-label="Side nav toggle icon" [icon]="menu" size="lg"></fa-icon>
+  </button>
+  <span>Quizzes</span>
+</mat-toolbar>
+<mat-sidenav-container>
+  <mat-sidenav #sidenavtwo [opened]="!deviceSm" role="navigation" [mode]="!deviceSm ? 'side' : 'over'">
+    <mat-nav-list>
+      <a mat-list-item [routerLink]="['/quizzes/dashboard']">Tablero</a>
+      <a mat-list-item [routerLink]="['/quizzes/flip-flop']">Flip-Flop</a>
+      <a mat-list-item [routerLink]="['/under-construction']">Sheets</a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

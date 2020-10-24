@@ -1,6 +1,7 @@
 export const environment = {
   production: true,
   firebaseConfig: {
+    apiEndpoint: 'https://raw.githubusercontent.com/xamarin/monodroid-samples/master/wear/Quiz/Quiz/Assets/Quiz.json',
     apiKey: 'AIzaSyCaEqnuR5Gbx_iAswbXuOBq1597MPUvMP4',
     authDomain: 'item-crud.firebaseapp.com',
     databaseURL: 'https://item-crud.firebaseio.com',
